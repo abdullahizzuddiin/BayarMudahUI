@@ -5,7 +5,7 @@
 <% 
     String nama = session.getAttribute("nama").toString();
     String noVoucher = request.getParameter("noVoucher");
-    String npm = "1106005673";
+    String username = "1106005673";
 
     Class.forName("com.mysql.jdbc.Driver");
     String url = "jdbc:mysql://localhost/bayarmudahui";
@@ -16,7 +16,7 @@
     st3 =  con.createStatement();
     st4 =  con.createStatement();
     
-    String queryAkun = "Select saldo from akun where npm ='"+npm+"'";
+    String queryAkun = "Select saldo from akun where username ='"+username+"'";
     ResultSet resultAkun = st1.executeQuery(queryAkun);
     Double saldo = 0.0;
                 
@@ -37,7 +37,7 @@
         
         if(status.equals("Tersedia"))
         {
-            String updateAkun = "UPDATE akun SET saldo ='"+(saldo+nominal)+"' where npm ='"+npm+"'";
+            String updateAkun = "UPDATE akun SET saldo ='"+(saldo+nominal)+"' where username ='"+username+"'";
             st3.executeUpdate(updateAkun);
             
             String updateVoucher = "UPDATE voucher SET status ='Digunakan' where kode_voucher ='"+noVoucher+"'";

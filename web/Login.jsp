@@ -70,7 +70,7 @@
             //pw.print("Welcome, "+resultSet.getObject(7));
 //            System.out.println(resultSet.getObject(7)+"asadio");
 //            System.out.println(resultSet.getObject(11)+"1238");
-            session.setAttribute("npm", resultSet.getObject(2));
+            session.setAttribute("username", resultSet.getObject(2));
             session.setAttribute("nama", resultSet.getObject(1));
 //pw.print(session.getAttribute("nama").toString());
 //            session.setAttribute("role", resultSet.getObject(11));

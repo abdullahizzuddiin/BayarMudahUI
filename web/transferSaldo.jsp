@@ -22,16 +22,16 @@
 
 <body>
     <% 
-        String npm = session.getAttribute("npm").toString();
+        String username = session.getAttribute("username").toString();
         String nama = session.getAttribute("nama").toString();
         Class.forName("com.mysql.jdbc.Driver");
         String url = "jdbc:mysql://localhost/bayarmudahui";
         Connection con = DriverManager.getConnection(url,"root","");
         Statement st = con.createStatement();
-        if(request.getParameter("npmtujuan") != null && request.getParameter("nominal") != null){
+        if(request.getParameter("usernametujuan") != null && request.getParameter("nominal") != null){
     
         
-        String query = "select * from akun where npm = "+request.getParameter("npmtujuan");
+        String query = "select * from akun where username = "+request.getParameter("usernametujuan");
         ResultSet resultSet = st.executeQuery(query);
         ResultSetMetaData rsmd = resultSet.getMetaData();
         
@@ -42,15 +42,15 @@
             double saldo = Double.parseDouble(resultSet.getObject(8).toString());
             if (nominal < saldo) {
                 saldo += nominal;
-                String query2 = "UPDATE `bayarmudahui`.`akun` SET `saldo` = '"+saldo+"' WHERE `akun`.`npm` = '"+request.getParameter("npmtujuan")+"'";
+                String query2 = "UPDATE `bayarmudahui`.`akun` SET `saldo` = '"+saldo+"' WHERE `akun`.`username` = '"+request.getParameter("usernametujuan")+"'";
                 st.executeUpdate(query2);
-                resultSet = st.executeQuery("select * from akun where npm = "+npm);
+                resultSet = st.executeQuery("select * from akun where username = "+username);
                 resultSet.first();
                 saldo = Double.parseDouble(resultSet.getObject(8).toString());
                 saldo -= nominal;
-                String query3 = "UPDATE `bayarmudahui`.`akun` SET `saldo` = '"+saldo+"' WHERE `akun`.`npm` = "+npm+";";
+                String query3 = "UPDATE `bayarmudahui`.`akun` SET `saldo` = '"+saldo+"' WHERE `akun`.`username` = "+username+";";
                 st.executeUpdate(query3);
-                String query4 = "INSERT INTO `riwayatTransfer`(`npmPengirim`, `npmPenerima`, `nominal`) VALUES ('"+npm+"','"+request.getParameter("npmtujuan")+"','"+nominal+"')";
+                String query4 = "INSERT INTO `riwayatTransfer`(`usernamePengirim`, `usernamePenerima`, `nominal`) VALUES ('"+username+"','"+request.getParameter("usernametujuan")+"','"+nominal+"')";
                 st.executeUpdate(query4);
                 }
             
@@ -61,7 +61,7 @@
         //con.close();
         //st.close();
 }
-String queryRiwayat = "SELECT * FROM `riwayatTransfer` where `npmPengirim` = "+npm;
+String queryRiwayat = "SELECT * FROM `riwayatTransfer` where `usernamePengirim` = "+username;
 ResultSet resultRiwayat = st.executeQuery(queryRiwayat);
 Locale locale = new Locale("in", "ID");
     NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
@@ -108,7 +108,7 @@ Locale locale = new Locale("in", "ID");
             </div>
             <div class="col-sm-4" style="width: 630px; margin-top: 40px; padding-left: 50px">                
                 <form action="transferSaldo.jsp" method="post">
-                <h3>NPM tujuan</h3>  <input id="npmtujuan" name="npmtujuan" class="form-control" type="text" style="height: 40px;width: 300px;border-radius: 0px;"/>
+                <h3>NPM tujuan</h3>  <input id="usernametujuan" name="usernametujuan" class="form-control" type="text" style="height: 40px;width: 300px;border-radius: 0px;"/>
                 <h3>Nominal</h3>
                 <input id="nominal" name="nominal" class="form-control" type="text" style="height: 40px;width: 300px;border-radius: 0px;"/>
                 <input class="btn btn-default" type="submit" 
@@ -120,7 +120,7 @@ Locale locale = new Locale("in", "ID");
                 <table class="table" style="font-size: 13pt">
                     <th>No</th>
                     <th>Waktu Transfer</th>
-                    <th>NPM Tujuan</th>
+                    <th>Username Tujuan</th>
                     <th>Nominal</th>
                     <% 
                         int i = 1;

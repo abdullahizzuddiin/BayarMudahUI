@@ -6,7 +6,7 @@
 <html lang="en">
 <% 
     String noVoucher = request.getParameter("noVoucher");
-    String npm = session.getAttribute("npm").toString();
+    String username = session.getAttribute("username").toString();
     String nama = session.getAttribute("nama").toString();
 
     Class.forName("com.mysql.jdbc.Driver");
@@ -21,7 +21,7 @@
     st6 =  con.createStatement();
     
 
-    String queryAkun = "Select saldo from akun where npm ='"+npm+"'";
+    String queryAkun = "Select saldo from akun where username ='"+username+"'";
     ResultSet resultAkun = st1.executeQuery(queryAkun);
     Double saldo = 0.0;
                 
@@ -42,19 +42,19 @@
         
         if(status.equals("Tersedia"))
         {
-            String updateAkun = "UPDATE akun SET saldo ='"+(saldo+nominal)+"' where npm ='"+npm+"'";
+            String updateAkun = "UPDATE akun SET saldo ='"+(saldo+nominal)+"' where username ='"+username+"'";
             st3.executeUpdate(updateAkun);
             
             String updateVoucher = "UPDATE voucher SET status ='Digunakan' where kode_voucher ='"+noVoucher+"'";
             st4.executeUpdate(updateVoucher);
             
-            String catatRiwayat = "INSERT INTO `riwayatReload`(`kode_voucher`, `npm`) VALUES ('"+noVoucher+"','"+npm+"')";
+            String catatRiwayat = "INSERT INTO `riwayatReload`(`kode_voucher`, `username`) VALUES ('"+noVoucher+"','"+username+"')";
             st6.executeUpdate(catatRiwayat);
         }
         
     }
     
-    String queryRiwayat = "SELECT * FROM `riwayatReload` r, voucher v where r.npm = "+npm+" and r.kode_voucher = v.kode_voucher";
+    String queryRiwayat = "SELECT * FROM `riwayatReload` r, voucher v where r.username = '"+username+"' and r.kode_voucher = v.kode_voucher";
     ResultSet resultRiwayat = st5.executeQuery(queryRiwayat);
     Locale locale = new Locale("in", "ID");
     NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);

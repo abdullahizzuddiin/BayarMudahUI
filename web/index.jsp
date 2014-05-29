@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col-sm-4" style="margin-left: 70px; width: 320px;">                        
                 <div class="row" style="background-color:#222222; margin-top: 30px; padding: 20px; padding-bottom: 45px">
-                <form action="content.jsp">
+                <form action="Login.jsp">
                         <h2 style="color: #15ad9f; font-family: sans-serif">easy login with SSO UI </h2>
                     <h3 style="color: white">Username</h3>
                     <input class="form-control" type="text" name="nama" placeholder="Nama Anda" style="height: 40px;width: 300px;border-radius: 0px;"/>

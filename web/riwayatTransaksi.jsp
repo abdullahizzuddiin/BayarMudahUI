@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <% 
-        String npm = session.getAttribute("npm").toString();
+        String username = session.getAttribute("username").toString();
         String nama = session.getAttribute("nama").toString();
         Class.forName("com.mysql.jdbc.Driver");
         String url = "jdbc:mysql://localhost/bayarmudahui";
@@ -13,7 +13,7 @@
         Statement st1;    
         st1 =  con.createStatement();
     
-        String query = "SELECT * FROM transaksi t, akuntransaksi at where at.npm = "+npm+" and at.id_transaksi = t.id ";
+        String query = "SELECT * FROM transaksi t, akuntransaksi at where at.username = '"+username+"' and at.id_transaksi = t.id ";
         ResultSet resultRiwayat = st1.executeQuery(query);
         
         Locale locale = new Locale("in", "ID");
@@ -80,7 +80,7 @@
                 <table class="table" style="font-size: 13pt">
                     <th>Waktu</th>
                     <th>Kode Transaksi</th>
-                    <th>NPM Tujuan</th>
+                    <th>Username Tujuan</th>
                     <th>Nama Barang</th>
                     <th>Nominal</th>
                     <th>Saldo</th>

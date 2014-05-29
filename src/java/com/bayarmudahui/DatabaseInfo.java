@@ -34,6 +34,46 @@ public class DatabaseInfo {
         } catch (Exception e) {            
         }
     }
+
+    public int transferSaldo(String pengirim, String penerima, String nominals){
+        /*
+        return 0 if penerima tidak ditemukan dalam database
+        return 1 if sukses
+        return 2 if saldo pengirim tidak mencukupi
+        */
+        try{
+        String query = "select * from akun where username = "+penerima;
+        ResultSet resultSet = stmt.executeQuery(query);
+        
+        if (resultSet.first() && !resultSet.next()) {
+            resultSet.first();
+            double nominal = Double.parseDouble(nominals);
+            System.out.println(resultSet.getObject(8).toString());
+            double saldo = Double.parseDouble(resultSet.getObject(8).toString());
+            if (nominal < saldo) {
+                saldo += nominal;
+                String query2 = "UPDATE `bayarmudahui`.`akun` SET `saldo` = '"+saldo+"' WHERE `akun`.`username` = '"+penerima+"'";
+                stmt.executeUpdate(query2);
+                resultSet = stmt.executeQuery("select * from akun where username = "+pengirim);
+                resultSet.first();
+                saldo = Double.parseDouble(resultSet.getObject(8).toString());
+                saldo -= nominal;
+                String query3 = "UPDATE `bayarmudahui`.`akun` SET `saldo` = '"+saldo+"' WHERE `akun`.`username` = "+pengirim+";";
+                stmt.executeUpdate(query3);
+                //String query4 = "INSERT INTO `riwayatTransfer`(`usernamePengirim`, `usernamePenerima`, `nominal`) VALUES ('"+username+"','"+request.getParameter("usernametujuan")+"','"+nominal+"')";
+                //st.executeUpdate(query4);
+                }else{
+                return 2;
+                }
+            
+            }else{
+            return 0;
+            }
+        }catch(Exception e){
+            
+        }
+        return 1;
+    }
     
     private void closeConnection() throws SQLException
     {

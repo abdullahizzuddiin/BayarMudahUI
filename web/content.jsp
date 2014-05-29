@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <% 
-    String npm = session.getAttribute("npm").toString();
+    String username = session.getAttribute("username").toString();
     String nama = session.getAttribute("nama").toString();
     Class.forName("com.mysql.jdbc.Driver");
     String url = "jdbc:mysql://localhost/bayarmudahui";
@@ -14,7 +14,7 @@
     Statement st1;    
     st1 =  con.createStatement();    
     
-    String queryAkun = "Select saldo from akun where npm ='"+npm+"'";
+    String queryAkun = "Select saldo from akun where username ='"+username+"'";
     ResultSet resultAkun = st1.executeQuery(queryAkun);
     double saldo = 0.0;
                 
@@ -26,7 +26,7 @@
     Locale locale = new Locale("in", "ID");
     NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
     
-    String queryLastBuy = "SELECT t.deskripsi FROM transaksi t, akuntransaksi a where a.npm = "+npm+" and a.id_transaksi = t.id order by tanggal desc";
+    String queryLastBuy = "SELECT t.deskripsi FROM transaksi t, akuntransaksi a where a.username = '"+username+"' and a.id_transaksi = t.id order by tanggal desc";
     Statement stl2;
     stl2 = con.createStatement();
     ResultSet resultLastBuy = stl2.executeQuery(queryLastBuy);
