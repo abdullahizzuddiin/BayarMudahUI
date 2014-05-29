@@ -31,7 +31,7 @@
         if(request.getParameter("usernametujuan") != null && request.getParameter("nominal") != null){
     
         
-        String query = "select * from akun where username = "+request.getParameter("usernametujuan");
+        String query = "select * from akun where username = '"+request.getParameter("usernametujuan"+"'");
         ResultSet resultSet = st.executeQuery(query);
         ResultSetMetaData rsmd = resultSet.getMetaData();
         
@@ -44,11 +44,11 @@
                 saldo += nominal;
                 String query2 = "UPDATE `bayarmudahui`.`akun` SET `saldo` = '"+saldo+"' WHERE `akun`.`username` = '"+request.getParameter("usernametujuan")+"'";
                 st.executeUpdate(query2);
-                resultSet = st.executeQuery("select * from akun where username = "+username);
+                resultSet = st.executeQuery("select * from akun where username = '"+username+"'");
                 resultSet.first();
                 saldo = Double.parseDouble(resultSet.getObject(8).toString());
                 saldo -= nominal;
-                String query3 = "UPDATE `bayarmudahui`.`akun` SET `saldo` = '"+saldo+"' WHERE `akun`.`username` = "+username+";";
+                String query3 = "UPDATE `bayarmudahui`.`akun` SET `saldo` = '"+saldo+"' WHERE `akun`.`username` = '"+username+"';";
                 st.executeUpdate(query3);
                 String query4 = "INSERT INTO `riwayatTransfer`(`usernamePengirim`, `usernamePenerima`, `nominal`) VALUES ('"+username+"','"+request.getParameter("usernametujuan")+"','"+nominal+"')";
                 st.executeUpdate(query4);
@@ -61,7 +61,7 @@
         //con.close();
         //st.close();
 }
-String queryRiwayat = "SELECT * FROM `riwayatTransfer` where `usernamePengirim` = "+username;
+String queryRiwayat = "SELECT * FROM `riwayatTransfer` where `usernamePengirim` = '"+username+"'";
 ResultSet resultRiwayat = st.executeQuery(queryRiwayat);
 Locale locale = new Locale("in", "ID");
     NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
