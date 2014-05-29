@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'nerisblack';    
+    src: url('../fonts/MyriadPro-Cond.otf') format('opentype');         
+         
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+body{
+    font-family: 'nerisblack';
+    font-size: 20pt;
+}
