@@ -8,6 +8,7 @@ package com.bayarmudahui;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -22,6 +23,7 @@ public class DatabaseInfo {
     public static final String PASSWORD = "";
     private Connection conn = null;
     private Statement stmt = null;
+    private ResultSet rs = null;
     
     private void openConnection()
     {
@@ -45,4 +47,21 @@ public class DatabaseInfo {
             conn.close();
         }
     }
+    
+    public Voucher getVoucher(String noVoucher) {
+        openConnection();
+        String queryVoucher = "Select * from voucher where kode_voucher ='"+noVoucher+"'";
+        try {
+            rs = stmt.executeQuery(queryVoucher);
+            while (rs.next()) {
+                String kode_voucher = rs.getString("kode_voucher");
+                int nominal = (int)rs.getFloat("nominal");
+                String status = rs.getString("status");
+                
+                Voucher voucher = new Voucher();
+            }
+        } catch (Exception e) {
+        }
+    }
+
 }
