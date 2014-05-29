@@ -40,15 +40,21 @@ public class DatabaseInfo {
         if(stmt != null) {
             try {
                 stmt.close();;
-            } catch (Exception e) {
+            } catch (SQLException e) {
             }
         }
         if(conn != null) {
-            conn.close();
+            try {
+
+                conn.close();
+
+            } catch (SQLException e) {
+            }
         }
+        
     }
     
-    public Voucher getVoucher(String noVoucher) {
+    public Voucher getVoucher(String noVoucher) throws SQLException {
         openConnection();
         String queryVoucher = "Select * from voucher where kode_voucher ='"+noVoucher+"'";
         try {
@@ -59,9 +65,13 @@ public class DatabaseInfo {
                 String status = rs.getString("status");
                 
                 Voucher voucher = new Voucher();
+                closeConnection();
+                return voucher;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
+        closeConnection();
+        return null;
     }
 
 }
