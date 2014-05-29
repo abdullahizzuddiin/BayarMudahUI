@@ -20,10 +20,22 @@ public class Akun {
     private String email;
     private String password;
     private String foto;
-    private int saldo;
+    private double saldo;
 
     public Akun() {
+        this.nama = nama;
+        this.npm = npm;
+        this.sex = sex;
+        this.jurusan = jurusan;
+        this.noHP = noHP;
+        this.domisili = domisili;
+        this.email = email;
+        this.password = password;
+        this.foto = foto;
+        this.saldo = saldo;
     }
+
+    
 
     public String getNama() {
         return nama;
@@ -97,7 +109,7 @@ public class Akun {
         this.foto = foto;
     }
 
-    public int getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 

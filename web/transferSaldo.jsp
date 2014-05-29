@@ -22,13 +22,13 @@
 
 <body>
     <% 
-String npm = session.getAttribute("npm").toString();
-String nama = session.getAttribute("nama").toString();
-Class.forName("com.mysql.jdbc.Driver");
+        String npm = session.getAttribute("npm").toString();
+        String nama = session.getAttribute("nama").toString();
+        Class.forName("com.mysql.jdbc.Driver");
         String url = "jdbc:mysql://localhost/bayarmudahui";
         Connection con = DriverManager.getConnection(url,"root","");
         Statement st = con.createStatement();
-if(request.getParameter("npmtujuan") != null && request.getParameter("nominal") != null){
+        if(request.getParameter("npmtujuan") != null && request.getParameter("nominal") != null){
     
         
         String query = "select * from akun where npm = "+request.getParameter("npmtujuan");

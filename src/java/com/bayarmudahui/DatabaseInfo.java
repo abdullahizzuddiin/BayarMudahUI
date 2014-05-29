@@ -53,7 +53,33 @@ public class DatabaseInfo {
         }
         
     }
-    
+    public Akun getAkun(String npm) throws SQLException
+    {
+        openConnection();
+        String query = "select * from akun where npm = "+npm;
+        try {
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String nama = rs.getString("nama");
+                String npmX = rs.getString("npm");
+                String sex = rs.getString("sex");
+                String jurusan = rs.getString("jurusan");
+                String noHP = rs.getString("noHP");
+                String domisili = rs.getString("domisili");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String foto = rs.getString("foto");
+                double saldo = rs.getFloat("saldo");
+                
+                Akun akun = new Akun(nama, npmX, sex, jurusan, noHP, domisili, email, password, foto, saldo);
+                closeConnection();
+                return akun;
+            }
+        } catch (Exception e) {
+        }
+        closeConnection();
+        return null;
+    }
     public Voucher getVoucher(String noVoucher) throws SQLException {
         openConnection();
         String queryVoucher = "Select * from voucher where kode_voucher ='"+noVoucher+"'";
@@ -73,5 +99,45 @@ public class DatabaseInfo {
         closeConnection();
         return null;
     }
+    
+    public Double getSaldobyNPM(String nama) throws SQLException
+    {
+        openConnection();
+        String query = "Select saldo from akun where nama ='"+nama+"'";
+        try {
+            rs = stmt.executeQuery(query);
+            if (rs.next()) {
+                String hasil = rs.getString("saldo");
+                Double saldo = Double.parseDouble(hasil);
+                closeConnection();
+                return saldo;
+            }
 
+        } catch (SQLException e) {
+        }
+        closeConnection();
+        return null;
+    }
+    
+    public void updateSaldo(double saldo, String nama)
+    {
+        openConnection();
+        String query = "UPDATE akun SET saldo ='"+ (float)(saldo)+"' where nama ='"+nama+"'";
+        try {
+            stmt.executeQuery(query);
+            closeConnection();
+        } catch (Exception e) {
+        }
+    }
+    
+    public void updateVoucher(String noVoucher)
+    {
+        openConnection();
+        String query = "UPDATE voucher SET status ='Digunakan' where kode_voucher ='"+noVoucher+"'";
+        try {
+           stmt.executeQuery(query);
+           closeConnection();
+        } catch (Exception e) {
+        }
+    }
 }
